@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------
+   OLYMPE INDIA × SIDEJOU INVITES — color + type foundation.
+   Literal brand tokens live directly in @theme; the font tokens are
+   indirected through the CSS variables next/font attaches to <html>
+   (see app/layout.js), which is why they live in a separate
+   `@theme inline` block instead of being declared as literals.
+------------------------------------------------------------------------ */
+
+@theme {
+  --color-ink: #050505;
+  --color-void: #0b0c0c;
+  --color-graphite: #151718;
+  --color-graphite-2: #242729;
+
+  --color-chrome-dark: #6f7374;
+  --color-chrome: #a6a9a8;
+  --color-chrome-light: #d1d0ca;
+
+  --color-copper-dark: #8a4932;
+  --color-copper: #a65b3c;
+  --color-copper-light: #c47a55;
+
+  /* The one saturated accent — sampled from the red/orange light in the
+     supplied event photography. Reserved for primary ticket CTAs and
+     focus rings so it keeps its weight. */
+  --color-ember: #e0452a;
+  --color-ember-dark: #b8321c;
+}
+
+@theme inline {
+  --font-display: var(--font-bebas);
+  --font-body: var(--font-archivo);
+  --font-mono: var(--font-plex-mono);
+}
+
+@layer base {
+  html {
+    background: var(--color-ink);
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-chrome-light);
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+
+  ::selection {
+    background: var(--color-copper);
+    color: var(--color-ink);
+  }
+
+  html {
+    scroll-padding-top: 4.5rem;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember);
+    outline-offset: 3px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Native scroll/snap/swipe for the lineup rail, without a visible
+     scrollbar duplicating the gallery's own implied edges. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Slow photographic zoom for image-led panels: the image scales inside
+     its overflow-hidden frame when the nearest `.group` is hovered or
+     holds keyboard focus. */
+  .photo-zoom {
+    transition: transform 1400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .group:hover .photo-zoom,
+  .group:focus-visible .photo-zoom,
+  .group:focus-within .photo-zoom {
+    transform: scale(1.045);
+  }
+
+  /* Static film grain — a tiny inline SVG noise tile, no animation. */
+  .grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  }
+}
+
+/* Hero scroll cue: a short light travelling down a hairline. */
+@keyframes scrollcue {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@keyframes lightbox-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Logo intro particles (components/intro/IntroOverlay.jsx). */
+@keyframes intro-particle {
+  0%,
+  100% {
+    opacity: 0.15;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(-10px);
+  }
+}
