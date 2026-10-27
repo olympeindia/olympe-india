@@ -21,7 +21,7 @@ const WORDS = [
  * the shared fade-up reveal plus a small scrubbed horizontal drift on the
  * words — no looping animation.
  */
-export default function BrandSection() {
+export default function BrandSection({ event }) {
   const rootRef = useRef(null);
   const wordsRef = useRef([]);
   const reducedMotion = usePrefersReducedMotion();
@@ -66,7 +66,7 @@ export default function BrandSection() {
         <div className="flex items-end justify-between gap-6">
           <SectionLabel index="05" label="OLYMPE LANGUAGE" />
           <p data-reveal className="font-mono text-[11px] uppercase tracking-[0.3em] text-chrome-dark">
-            Delhi / Bengaluru
+            {event.dates.map((entry) => entry.city).join(" / ")}
           </p>
         </div>
         <h2 id="brand-heading" className="sr-only">
@@ -115,7 +115,11 @@ export default function BrandSection() {
         </div>
 
         <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 font-mono text-[11px] uppercase tracking-[0.3em] text-chrome-dark sm:flex-row sm:justify-between">
-          <p>27 NOV — DELHI · 28 NOV — BENGALURU</p>
+          <p>
+            {event.dates
+              .map((entry) => `${entry.date} — ${entry.city}`)
+              .join(" · ")}
+          </p>
           <p>OLYMPE INDIA · 2026</p>
         </div>
       </div>

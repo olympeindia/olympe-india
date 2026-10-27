@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import useScrollReveal from "@/lib/motion/useScrollReveal";
 import SectionLabel from "@/components/common/SectionLabel";
-import { EVENT } from "@/data/event";
 import {
   MEDIA_CAPTION,
   introImages,
@@ -13,7 +12,7 @@ import {
 } from "@/data/media";
 
 // Chapter copy per city. Ticket URLs are NOT repeated here — they are
-// read from EVENT.dates so data/event.js stays the single source.
+// read from the scoped event data so data/event.js stays the single source.
 const CHAPTERS = {
   DELHI: {
     chapter: "01",
@@ -29,7 +28,7 @@ const CHAPTERS = {
   },
 };
 
-export default function EventSection() {
+export default function EventSection({ event }) {
   const introRef = useRef(null);
   const panelsRef = useRef(null);
   useScrollReveal(introRef, "[data-reveal]", { stagger: 0.1 });
@@ -55,8 +54,10 @@ export default function EventSection() {
               data-reveal
               className="mt-6 font-display text-[clamp(3.5rem,8.5vw,8.5rem)] leading-[0.86] text-white"
             >
-              TWO CITIES.
-              <span className="block text-chrome">TWO NIGHTS.</span>
+              {event.dates.length > 1 ? "TWO CITIES." : "ONE CITY."}
+              <span className="block text-chrome">
+                {event.dates.length > 1 ? "TWO NIGHTS." : "ONE NIGHT."}
+              </span>
               <span className="block">ONE FREQUENCY.</span>
             </h2>
           </div>
@@ -65,8 +66,10 @@ export default function EventSection() {
             data-reveal
             className="mt-10 max-w-md text-base leading-8 text-chrome lg:mt-16"
           >
-            {EVENT.presenter} brings {EVENT.title} to India for two nights
-            of uncompromising electronic music — Delhi and Bengaluru, November
+            {event.presenter} brings {event.title} to India for{" "}
+            {event.dates.length > 1 ? "two nights" : "one night"} of
+            uncompromising electronic music —{" "}
+            {event.dates.map((entry) => entry.city).join(" and ")}, November
             2026.
           </p>
         </div>
@@ -111,7 +114,7 @@ export default function EventSection() {
         ref={panelsRef}
         className="mx-auto grid max-w-[1500px] grid-cols-1 gap-4 px-4 pb-24 sm:px-10 md:grid-cols-2 md:gap-6 lg:px-16 lg:pb-32"
       >
-        {EVENT.dates.map((entry, index) => {
+        {event.dates.map((entry, index) => {
           const chapter = CHAPTERS[entry.city];
           return (
             <article
@@ -143,7 +146,7 @@ export default function EventSection() {
 
               <div>
                 <p className="font-mono text-xs uppercase tracking-[0.35em] text-chrome-light">
-                  {EVENT.presenter}
+                  {event.presenter}
                 </p>
                 <h3 className="mt-3 font-display text-[clamp(3.5rem,26cqw,11rem)] leading-[0.82] text-white">
                   {entry.city}

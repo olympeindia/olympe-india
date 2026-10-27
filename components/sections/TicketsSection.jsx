@@ -4,7 +4,6 @@ import { useRef } from "react";
 import Image from "next/image";
 import useScrollReveal from "@/lib/motion/useScrollReveal";
 import SectionLabel from "@/components/common/SectionLabel";
-import { EVENT } from "@/data/event";
 import { delhiEventImage, bengaluruEventImage } from "@/data/media";
 
 const FULL_DATES = {
@@ -22,7 +21,7 @@ const IMAGES = {
  * panel linking to its exact supplied booking destination (from
  * data/event.js), opened in a new tab. No prices or availability claims.
  */
-export default function TicketsSection() {
+export default function TicketsSection({ event }) {
   const rootRef = useRef(null);
   useScrollReveal(rootRef, "[data-reveal]", { stagger: 0.1 });
 
@@ -45,7 +44,7 @@ export default function TicketsSection() {
         </h2>
 
         <ul className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
-          {EVENT.dates.map((entry) => (
+          {event.dates.map((entry) => (
             <li key={entry.city} data-reveal>
               {/* The ticket link is stretched over the whole panel; the
                   directions link sits above it (links can't be nested). */}
@@ -115,7 +114,7 @@ export default function TicketsSection() {
           data-reveal
           className="mt-12 font-mono text-[11px] uppercase tracking-[0.4em] text-chrome-dark"
         >
-          {EVENT.title} × {EVENT.presenter}
+          {event.title} × {event.presenter}
         </p>
       </div>
     </section>

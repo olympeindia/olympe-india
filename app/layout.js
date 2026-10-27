@@ -38,7 +38,7 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    // suppressHydrationWarning: the intro gate script in app/page.js sets
+    // suppressHydrationWarning: the intro gate script in EventSite sets
     // data-intro on <html> before React hydrates.
     <html
       lang="en"

@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { EVENT } from "@/data/event";
 
 /**
  * The persistent booking control — collapsed to a small copper-lined
@@ -11,7 +10,7 @@ import { EVENT } from "@/data/event";
  * plain markup, not a modal/portal — there is nothing here that needs
  * to trap focus or block the page.
  */
-export default function StickyTickets() {
+export default function StickyTickets({ event }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);
 
@@ -39,7 +38,7 @@ export default function StickyTickets() {
           <p className="mb-1 px-1 font-mono text-[9px] uppercase tracking-[0.35em] text-chrome-dark">
             Get Tickets
           </p>
-          {EVENT.dates.map((entry) => (
+          {event.dates.map((entry) => (
             <a
               key={entry.city}
               href={entry.ticketUrl}
