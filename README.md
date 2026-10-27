@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# OLYMPE INDIA
 
-## Getting Started
+The OLYMPE INDIA event website, built with Next.js App Router and deployed
+to Cloudflare Workers with OpenNext.
 
-First, run the development server:
+## Routes
+
+- `/` — both confirmed event dates and cities.
+- `/bangalore` — Bengaluru event information only.
+- `/delhi` — Delhi event information only.
+
+Ticket and directions URLs are maintained in `data/event.js`. City pages use
+that data to render only their own date, ticket destination, directions, and
+city-specific event labels.
+
+## Local development
+
+Install dependencies and start the Next.js development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Run the available checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## Cloudflare preview
 
-To learn more about Next.js, take a look at the following resources:
+Build the OpenNext Worker output, then run it locally with Wrangler:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npx opennextjs-cloudflare build
+npx wrangler dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Cloudflare deployment
 
-## Deploy on Vercel
+After review, with Cloudflare authentication configured for the account and
+Worker named in `wrangler.jsonc`, build and deploy using OpenNext:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx opennextjs-cloudflare build
+npx opennextjs-cloudflare deploy
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The deployment command publishes to Cloudflare; it is not part of local
+development or validation.

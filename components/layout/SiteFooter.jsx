@@ -9,7 +9,7 @@ const INSTAGRAM_LINKS = {
 
 const LINKTREE = "https://linktr.ee/olympeindia";
 
-export default function SiteFooter() {
+export default function SiteFooter({ event }) {
   return (
     <footer className="relative isolate overflow-hidden bg-ink text-white">
       {/* Top divider */}
@@ -57,7 +57,7 @@ export default function SiteFooter() {
           {/* Brand */}
           <div>
             <p className="font-mono text-[9px] uppercase tracking-[0.5em] text-[#a85b35]">
-              OLYMPE INDIA × SIDEJOU INVITES
+              {event.title} × {event.presenter}
             </p>
 
             <h2 className="mt-7 font-sans text-[clamp(3.5rem,8vw,8rem)] font-black leading-[0.78] tracking-[-0.07em] text-white/90">
@@ -77,25 +77,17 @@ export default function SiteFooter() {
             </p>
 
             <div className="mt-7 space-y-6">
-              <div>
-                <p className="font-mono text-[10px] tracking-[0.3em] text-white/70">
-                  27 NOV — DELHI
-                </p>
+              {event.dates.map((entry) => (
+                <div key={entry.city}>
+                  <p className="font-mono text-[10px] tracking-[0.3em] text-white/70">
+                    {entry.date} — {entry.city}
+                  </p>
 
-                <p className="mt-2 text-[9px] uppercase tracking-[0.25em] text-white/25">
-                  OLYMPE INDIA × SIDEJOU
-                </p>
-              </div>
-
-              <div>
-                <p className="font-mono text-[10px] tracking-[0.3em] text-white/70">
-                  28 NOV — BENGALURU
-                </p>
-
-                <p className="mt-2 text-[9px] uppercase tracking-[0.25em] text-white/25">
-                  OLYMPE INDIA × SIDEJOU
-                </p>
-              </div>
+                  <p className="mt-2 text-[9px] uppercase tracking-[0.25em] text-white/25">
+                    {event.title} × {event.presenter}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -222,7 +214,9 @@ export default function SiteFooter() {
         <div className="mt-20 border-t border-white/[0.08] pt-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/40">
-              27 NOV 2026 — DELHI / 28 NOV 2026 — BENGALURU
+              {event.dates
+                .map((entry) => `${entry.date} 2026 — ${entry.city}`)
+                .join(" / ")}
             </p>
 
             <div className="flex items-center gap-6">

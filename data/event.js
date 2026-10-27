@@ -39,3 +39,21 @@ export const EVENT = {
     sidejou: null,
   },
 };
+
+const CITY_ROUTES = {
+  bangalore: "BENGALURU",
+  delhi: "DELHI",
+};
+
+export function getEventForCity(route) {
+  const city = CITY_ROUTES[route];
+  const cityEvent = EVENT.dates.find((entry) => entry.city === city);
+
+  if (!cityEvent) return null;
+
+  return {
+    ...EVENT,
+    dates: [cityEvent],
+    cornerLabelRight: [cityEvent.city, "INDIA", "2026"],
+  };
+}

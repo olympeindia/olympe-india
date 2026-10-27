@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { EVENT } from "@/data/event";
 
 const LINKS = [
   { href: "#event", label: "Events" },
@@ -17,7 +16,7 @@ const LINKS = [
  * screens, where the hero CTA and the floating tickets control already
  * cover the main journeys.
  */
-export default function SiteHeader() {
+export default function SiteHeader({ event }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -37,7 +36,7 @@ export default function SiteHeader() {
         aria-label="Primary"
         className="mx-auto flex max-w-[1500px] items-center justify-between gap-6 px-4 py-3 sm:px-10 lg:px-16"
       >
-        <a href="#top" className="flex min-h-12 items-center gap-3" aria-label={`${EVENT.title} — back to top`}>
+        <a href="#top" className="flex min-h-12 items-center gap-3" aria-label={`${event.title} — back to top`}>
           <Image
             src="/assets/olympe/logo/blood2.PNG"
             alt=""
@@ -46,7 +45,7 @@ export default function SiteHeader() {
             className="h-10 w-10 object-contain mix-blend-screen"
           />
           <span className="hidden font-mono text-[11px] uppercase tracking-[0.35em] text-chrome-light sm:inline">
-            {EVENT.title}
+            {event.title}
           </span>
         </a>
 

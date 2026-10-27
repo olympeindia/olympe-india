@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { gsap } from "@/lib/gsap";
 import usePrefersReducedMotion from "@/lib/motion/usePrefersReducedMotion";
-import { EVENT } from "@/data/event";
 import { heroImage } from "@/data/media";
 
 const LOGO = "/assets/olympe/hero/olympe-india.png";
@@ -16,7 +15,7 @@ const LOGO = "/assets/olympe/hero/olympe-india.png";
  * up) — nothing blocks the visitor from scrolling straight on, and under
  * reduced motion everything is simply present.
  */
-export default function Hero() {
+export default function Hero({ event }) {
   const reducedMotion = usePrefersReducedMotion();
   const rootRef = useRef(null);
   const imageRef = useRef(null);
@@ -121,14 +120,14 @@ export default function Hero() {
         className="relative mx-auto flex w-full max-w-[1500px] flex-1 flex-col justify-end px-4 pb-24 pt-28 sm:px-10 sm:pb-28 lg:justify-center lg:px-16 lg:pb-20"
       >
         <p className="font-mono text-[11px] uppercase tracking-[0.45em] text-chrome-light sm:text-xs">
-          {EVENT.presenter}
+          {event.presenter}
         </p>
 
         {/* The logo file carries wide black padding around the wordmark;
             the wrapper crops to the wordmark itself (measured from the
             2105×747 source) so it aligns with the type column. */}
         <h1 className="relative mt-5 aspect-[1.706] w-[min(84vw,600px)] overflow-hidden">
-          <span className="sr-only">{EVENT.title}</span>
+          <span className="sr-only">{event.title}</span>
           <Image
             src={LOGO}
             alt=""
@@ -145,7 +144,7 @@ export default function Hero() {
         </p>
 
         <dl className="mt-8 flex flex-wrap gap-x-10 gap-y-4 sm:mt-10">
-          {EVENT.dates.map((entry) => (
+          {event.dates.map((entry) => (
             <div key={entry.city} className="flex flex-col">
               <dt className="font-mono text-[11px] uppercase tracking-[0.35em] text-chrome">
                 {entry.city}
