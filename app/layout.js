@@ -1,7 +1,9 @@
+import Script from "next/script";
 import { Bebas_Neue, Archivo, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/providers/SmoothScroll";
 import { EVENT } from "@/data/event";
+
 
 // Condensed editorial display face — large artist/wordmark-scale type.
 const bebasNeue = Bebas_Neue({
@@ -47,6 +49,20 @@ export default function RootLayout({ children }) {
     >
       <body className="min-h-full bg-ink font-body text-chrome-light">
         <SmoothScroll>{children}</SmoothScroll>
+        <Script id="meta-pixel" strategy="afterInteractive">
+  {`
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '833697471403110');
+    fbq('track', 'PageView');
+  `}
+</Script>
       </body>
     </html>
   );
