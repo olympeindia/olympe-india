@@ -18,6 +18,8 @@ const LINKS = [
  */
 export default function SiteHeader({ event }) {
   const [scrolled, setScrolled] = useState(false);
+  const [ticketsOpen, setTicketsOpen] = useState(false);
+  const singleCityEvent = event.dates.length === 1 ? event.dates[0] : null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -62,12 +64,48 @@ export default function SiteHeader({ event }) {
           ))}
         </ul>
 
-        <a
-          href="#tickets"
-          className="inline-flex min-h-11 items-center border border-ember px-5 font-mono text-[11px] uppercase tracking-[0.3em] text-white transition-colors hover:bg-ember"
-        >
-          Get Tickets
-        </a>
+        {singleCityEvent ? (
+          <a
+            href={singleCityEvent.ticketUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-11 items-center border border-ember px-5 font-mono text-[11px] uppercase tracking-[0.3em] text-white transition-colors hover:bg-ember"
+          >
+            Get Tickets
+          </a>
+        ) : (
+          <div className="relative">
+            <button
+              type="button"
+              aria-expanded={ticketsOpen}
+              aria-controls="header-ticket-options"
+              onClick={() => setTicketsOpen((open) => !open)}
+              className="inline-flex min-h-11 items-center border border-ember px-5 font-mono text-[11px] uppercase tracking-[0.3em] text-white transition-colors hover:bg-ember"
+            >
+              Get Tickets
+            </button>
+            {ticketsOpen && (
+              <div
+                id="header-ticket-options"
+                aria-label="Choose a city"
+                className="absolute right-0 top-full z-50 mt-2 min-w-full border border-white/20 bg-ink/95 p-2 backdrop-blur-sm"
+              >
+                {event.dates.map((entry) => (
+                  <a
+                    key={entry.city}
+                    href={entry.ticketUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => setTicketsOpen(false)}
+                    className="flex min-h-11 items-center whitespace-nowrap px-4 font-mono text-[11px] uppercase tracking-[0.3em] text-chrome-light transition-colors hover:bg-ember hover:text-white"
+                  >
+                    {entry.city.charAt(0) + entry.city.slice(1).toLowerCase()}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </nav>
     </header>
   );
